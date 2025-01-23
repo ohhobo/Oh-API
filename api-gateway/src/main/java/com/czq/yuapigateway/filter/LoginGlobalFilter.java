@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//全局过滤器，不需要显式加在路由配置中
 @Slf4j
 @Component
 public class LoginGlobalFilter implements GlobalFilter, Ordered {

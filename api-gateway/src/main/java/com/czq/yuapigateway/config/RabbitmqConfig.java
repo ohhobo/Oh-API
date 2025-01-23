@@ -25,7 +25,7 @@ public class RabbitmqConfig {
         return new DirectExchange(EXCHANGE_INTERFACE_CONSISTENT,true,false);
     }
 
-    //声明QUEUE_LOGIN_SMS队列
+    //声明QUEUE_INTERFACE_CONSISTENT队列
     @Bean(QUEUE_INTERFACE_CONSISTENT)
     public Queue QUEUE_INTERFACE_SMS(){
         return new Queue(QUEUE_INTERFACE_CONSISTENT,true,false,false);

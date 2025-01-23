@@ -30,7 +30,7 @@ public class InterfaceInvokeListener {
     private UserInterfaceInfoService userInterfaceInfoService;
 
 
-    //监听queue_sms_code队列，实现接口统计功能
+    //监听QUEUE_INTERFACE_CONSISTENT队列，实现接口统计功能
     //生产者是懒加载机制，消费者是饿汉加载机制，二者机制不对应，所以消费者要自行创建队列并加载，否则会报错
     @RabbitListener(queuesToDeclare = { @Queue(QUEUE_INTERFACE_CONSISTENT)})
     public void receiveSms(UserInterfaceInfoMessage userInterfaceInfoMessage, Message message, Channel channel) throws IOException {
