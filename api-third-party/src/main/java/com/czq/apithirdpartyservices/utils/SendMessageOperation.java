@@ -21,7 +21,7 @@ import static com.czq.apicommon.constant.RedisConstant.LOGINCODEPRE;
 public class SendMessageOperation {
 
     private SimpleEmail mail=new SimpleEmail();
-    public  void sendMessage(String targetEmail, RedisTemplate<String,String> redisTemplate)  {
+    public  void sendMessage(String targetEmail, String code, RedisTemplate<String,String> redisTemplate)  {
         try {
             // 设置邮箱服务器信息
             mail.setSslSmtpPort(QQEmailConfig.PORT);
@@ -37,7 +37,6 @@ public class SendMessageOperation {
             // 设置邮件主题
             mail.setSubject("Chen API");
 
-            String code = RandomUtil.getFourBitRandom();
             //设置数据的5分钟有效期限
             redisTemplate.opsForValue().set(LOGINCODEPRE+targetEmail,code,5,TimeUnit.MINUTES);
             // 设置邮件内容

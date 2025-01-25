@@ -34,7 +34,8 @@ public class MessageListener {
         //发送邮箱验证码
         SendMessageOperation messageOperation = new SendMessageOperation();
         String targetEmail = smsMessage.getEmail();
-        messageOperation.sendMessage(targetEmail,stringRedisTemplate);
+        String code = smsMessage.getCode();
+        messageOperation.sendMessage(targetEmail,code,stringRedisTemplate);
 
     }
 
