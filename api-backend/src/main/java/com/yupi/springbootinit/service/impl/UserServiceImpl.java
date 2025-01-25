@@ -306,24 +306,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //令牌桶算法实现短信接口的限流，因为手机号码重复发送短信，要进行流量控制
         //解决同一个手机号的并发问题，锁的粒度非常小，不影响性能。只是为了防止用户第一次发送短信时的恶意调用
         synchronized (email.intern()) {
-            Boolean exist = stringRedisTemplate.hasKey(USER_LOGIN_EMAIL_CODE +email);
+            String redisKey = captchaType.equals(REGISTER_SIGN) ? USER_REGISTER_EMAIL_CODE: USER_LOGIN_EMAIL_CODE;
+            Boolean exist = stringRedisTemplate.hasKey(redisKey +email);
             if (exist!=null && exist) {
                 //1.令牌桶算法对手机短信接口进行限流 具体限流规则为同一个手机号，60s只能发送一次
                 long lastTime=0L;
                 LeakyBucket leakyBucket = null;
-                if (captchaType.equals(REGISTER_SIGN)){
-                    String strLastTime = stringRedisTemplate.opsForValue().get(USER_REGISTER_EMAIL_CODE + email);
-                    if (strLastTime!=null){
-                        lastTime = Long.parseLong(strLastTime);
-                    }
-                    leakyBucket = registerLeakyBucket;
-                }else{
-                    String strLastTime = stringRedisTemplate.opsForValue().get(USER_LOGIN_EMAIL_CODE + email);
-                    if (strLastTime!=null){
-                        lastTime = Long.parseLong(strLastTime);
-                    }
-                    leakyBucket = loginLeakyBucket;
+                // 获取上次发送时间
+                String strLastTime = stringRedisTemplate.opsForValue().get(redisKey+email);
+                if (strLastTime != null) {
+                    lastTime = Long.parseLong(strLastTime);
                 }
+
+                // 根据验证码类型选择对应的令牌桶
+                leakyBucket = captchaType.equals(REGISTER_SIGN) ?
+                        registerLeakyBucket :
+                        loginLeakyBucket;
 
                 if (!leakyBucket.control(lastTime)) {
                     log.info("邮箱发送太频繁了");
