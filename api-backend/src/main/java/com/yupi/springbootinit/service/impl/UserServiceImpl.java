@@ -337,13 +337,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             //消息队列异步发送短信，提高短信的吞吐量
             rabbitTemplate.convertAndSend(EXCHANGE_SMS_INFORM,ROUTINGKEY_SMS,smsMessage);
 
-            log.info("邮箱对象："+smsMessage.toString());
+            log.info("邮箱对象：{}", smsMessage.toString());
             //更新手机号发送短信的时间
-            if (captchaType.equals(REGISTER_SIGN)){
-                stringRedisTemplate.opsForValue().set(USER_REGISTER_EMAIL_CODE +email,""+System.currentTimeMillis()/1000);
-            }else {
-                stringRedisTemplate.opsForValue().set(USER_LOGIN_EMAIL_CODE +email,""+System.currentTimeMillis()/1000);
-            }
+            stringRedisTemplate.opsForValue().set(redisKey +email,""+System.currentTimeMillis()/1000);
 
         }
 
