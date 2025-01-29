@@ -53,6 +53,7 @@ CREATE TABLE `interface_info`  (
                                    `responseHeader` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '响应头',
                                    `status` tinyint(0) NULL DEFAULT 1 COMMENT '接口状态 0 关闭，1启用',
                                    `isDelete` int(0) NULL DEFAULT 1 COMMENT '逻辑删除 0 删除，1正常',
+                                   `likeCount` INT DEFAULT 0 COMMENT '点赞数',
                                    `createTime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
                                    `updateTime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
                                    `userId` bigint(0) NULL DEFAULT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE `interface_info`  (
                                    `parameterExample` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数示例',
                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
+ALTER TABLE interface_info ADD INDEX idx_like_count (likeCount);
 -- ----------------------------
 -- Records of interface_info
 -- ----------------------------

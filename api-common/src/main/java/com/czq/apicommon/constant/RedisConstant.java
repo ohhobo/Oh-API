@@ -15,4 +15,6 @@ public interface RedisConstant {
     //短信登录key
     public static String LOGINCODEPRE = "user::email::register::";
 
+    String RANKING_KEY = "api:like:ranking";
+
 }

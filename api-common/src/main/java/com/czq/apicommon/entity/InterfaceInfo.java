@@ -1,7 +1,9 @@
 package com.czq.apicommon.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +14,8 @@ import java.util.Date;
  */
 @TableName(value ="interface_info")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class InterfaceInfo implements Serializable {
     /**
      * 
@@ -23,6 +27,11 @@ public class InterfaceInfo implements Serializable {
      * 接口名称
      */
     private String name;
+
+    /**
+     * 点赞数
+     */
+    private Integer likeCount;
 
     /**
      * 接口描述

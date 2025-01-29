@@ -1,6 +1,7 @@
 package com.yupi.springbootinit.service.impl;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yupi.springbootinit.common.ErrorCode;
 import com.yupi.springbootinit.exception.BusinessException;
@@ -18,6 +19,14 @@ import org.springframework.stereotype.Service;
 public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, InterfaceInfo>
     implements InterfaceInfoService{
 
+    @Override
+    public void incrementLikeCount(Long interfaceId, int delta) {
+        this.update(
+                new LambdaUpdateWrapper<InterfaceInfo>()
+                        .setSql("like_count = like_count + " + delta)
+                        .eq(InterfaceInfo::getId, interfaceId)
+        );
+    }
     @Override
     public void validInterfaceInfo(InterfaceInfo interfaceInfo, boolean add) {
 
