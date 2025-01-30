@@ -56,6 +56,10 @@ server:
         max-age: 2592000
         #cookie作用域
 #        domain: #
+  compression:
+    enabled: true
+    mime-types: text/event-stream,application/json
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false

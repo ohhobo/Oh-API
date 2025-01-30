@@ -17,4 +17,6 @@ public interface RedisConstant {
 
     String RANKING_KEY = "api:like:ranking";
 
+    String RANKING_PUSH_KEY = "api:like:update";
+
 }

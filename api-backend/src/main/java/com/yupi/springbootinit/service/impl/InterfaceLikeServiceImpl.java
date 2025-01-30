@@ -9,8 +9,10 @@ import com.yupi.springbootinit.service.InterfaceLikeService;
 import com.yupi.springbootinit.service.RankingService;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.formula.functions.Rank;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import static com.czq.apicommon.constant.RedisConstant.RANKING_PUSH_KEY;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class InterfaceLikeServiceImpl extends ServiceImpl<InterfaceLikeMapper, InterfaceLike> implements InterfaceLikeService {
     private final InterfaceInfoService interfaceInfoService;
     private final RankingService rankingService;
+    private final StringRedisTemplate stringRedisTemplate;
     @Override
     @Transactional
     public void toggleLike(Long userId, Long interfaceId) {
@@ -52,6 +55,7 @@ public class InterfaceLikeServiceImpl extends ServiceImpl<InterfaceLikeMapper, I
         // 调用其他 Service
         interfaceInfoService.incrementLikeCount(interfaceId, delta);
         rankingService.updateRanking(interfaceId, delta);
+        stringRedisTemplate.convertAndSend(RANKING_PUSH_KEY, interfaceId.toString());
     }
 
     @Override
