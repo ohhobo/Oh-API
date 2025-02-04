@@ -18,4 +18,7 @@ public interface RabbitmqConstant {
     String ORDER_SUCCESS_QUEUE_NAME = "order.pay.success.queue";
     String ORDER_SUCCESS_EXCHANGE_ROUTING_KEY = "order.pay.success";
 
+    String SECKILL_QUEUE = "seckill.queue";
+    String SECKILL_EXCHANGE = "seckill.exchange";
+    String SECKILL_ROUTING_KEY = "seckill.routing";
 }

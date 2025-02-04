@@ -24,11 +24,20 @@ public class RabbitmqConfig {
     public Exchange EXCHANGE_SMS_INFORM(){
         return new DirectExchange(EXCHANGE_SMS_INFORM,true,false);
     }
+    @Bean(SECKILL_EXCHANGE)
+    public Exchange SECKILL_EXCHANGE(){
+        return new DirectExchange(SECKILL_EXCHANGE,true,false);
+    }
 
     //声明QUEUE_LOGIN_SMS队列
     @Bean(QUEUE_LOGIN_SMS)
     public Queue QUEUE_INTERFACE_SMS(){
         return new Queue(QUEUE_LOGIN_SMS,true,false,false);
+    }
+
+    @Bean(SECKILL_QUEUE)
+    public Queue SECKILL_QUEUE(){
+        return new Queue(SECKILL_QUEUE,true,false,false);
     }
 
     //交换机绑定队列
@@ -37,5 +46,12 @@ public class RabbitmqConfig {
         return new Binding(QUEUE_LOGIN_SMS,
                 Binding.DestinationType.QUEUE, EXCHANGE_SMS_INFORM,
                 ROUTINGKEY_SMS,null);
+    }
+
+    @Bean
+    public Binding BINDING_QUEUE_SECKILL(){
+        return new Binding(SECKILL_QUEUE,
+                Binding.DestinationType.QUEUE,SECKILL_EXCHANGE,
+                SECKILL_ROUTING_KEY,null);
     }
 }

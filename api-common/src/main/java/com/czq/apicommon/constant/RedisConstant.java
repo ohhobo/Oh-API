@@ -19,4 +19,7 @@ public interface RedisConstant {
 
     String RANKING_PUSH_KEY = "api:like:update";
 
+    String SECKILL_USER = "seckill:user:";
+    String SECKILL_STOCK = "seckill:stock:";
+
 }
